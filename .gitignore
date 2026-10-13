@@ -1,0 +1,4 @@
+bin/
+*.class
+lib/*.jar
+sources.txt
