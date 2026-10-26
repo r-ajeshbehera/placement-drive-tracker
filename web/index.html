@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Placement Drive Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">PDT</span>
+      <div>
+        <h1>Placement Drive Tracker</h1>
+        <p>Who is eligible for which drive, in one click</p>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" data-tab="dashboard" class="active">Dashboard</button>
+      <button type="button" data-tab="students">Students</button>
+      <button type="button" data-tab="drives">Drives</button>
+      <button type="button" data-tab="eligible">Eligibility</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="tab-panel">
+      <div class="stats">
+        <div class="stat"><b id="sStudents">0</b><span>Students</span></div>
+        <div class="stat"><b id="sDrives">0</b><span>Drives</span></div>
+        <div class="stat"><b id="sUpcoming">0</b><span>Upcoming drives</span></div>
+        <div class="stat"><b id="sAvg">0.00</b><span>Average CGPA</span></div>
+      </div>
+      <div class="card">
+        <h2>Upcoming drives</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Company</th><th>Role</th><th>Min CGPA</th><th>Eligible</th><th></th></tr></thead>
+            <tbody id="upcomingBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENTS -->
+    <section id="students" class="tab-panel" hidden>
+      <div class="grid">
+        <form id="studentForm" class="card form" autocomplete="off">
+          <h2>Add student</h2>
+          <label for="stName">Name</label>
+          <input id="stName" name="name" required maxlength="100" placeholder="e.g. Ananya Das">
+          <label for="stBranch">Branch</label>
+          <input id="stBranch" name="branch" required maxlength="50" value="MCA">
+          <label for="stCgpa">CGPA (0 to 10)</label>
+          <input id="stCgpa" name="cgpa" type="number" step="0.01" min="0" max="10" required placeholder="e.g. 7.85">
+          <button type="submit" class="primary">Add student</button>
+        </form>
+        <div class="card">
+          <div class="card-head">
+            <h2>All students <small>(highest CGPA first)</small></h2>
+            <input id="studentFilter" type="search" placeholder="Filter by name or branch" aria-label="Filter students">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Branch</th><th>CGPA</th><th>Actions</th></tr></thead>
+              <tbody id="studentBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DRIVES -->
+    <section id="drives" class="tab-panel" hidden>
+      <div class="grid">
+        <form id="driveForm" class="card form" autocomplete="off">
+          <h2>Add placement drive</h2>
+          <label for="drCompany">Company</label>
+          <input id="drCompany" name="company" required maxlength="100" placeholder="e.g. Infosys">
+          <label for="drRole">Role</label>
+          <input id="drRole" name="role" required maxlength="100" placeholder="e.g. Systems Engineer">
+          <label for="drMin">Minimum CGPA</label>
+          <input id="drMin" name="minCgpa" type="number" step="0.1" min="0" max="10" required placeholder="e.g. 6.5">
+          <label for="drDate">Drive date</label>
+          <input id="drDate" name="date" type="date" required>
+          <button type="submit" class="primary">Add drive</button>
+        </form>
+        <div class="card">
+          <div class="card-head">
+            <h2>All drives</h2>
+            <form id="searchForm" class="search">
+              <input id="driveSearch" type="search" placeholder="Search company" aria-label="Search drives by company">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Date</th><th>Company</th><th>Role</th><th>Min CGPA</th><th>Actions</th></tr></thead>
+              <tbody id="driveBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ELIGIBILITY -->
+    <section id="eligible" class="tab-panel" hidden>
+      <div class="card">
+        <h2>Eligible students for a drive</h2>
+        <p class="muted">Runs the SQL JOIN: students whose CGPA is at least the drive's minimum, highest first.</p>
+        <div class="row">
+          <label for="eligDrive">Drive</label>
+          <select id="eligDrive"></select>
+          <button type="button" id="eligBtn" class="primary">Show eligible</button>
+        </div>
+        <div id="eligResult"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">Core Java · JDBC · MySQL · plain HTML/CSS/JavaScript · Rajesh Behera</footer>
+  <script src="app.js"></script>
+</body>
+</html>

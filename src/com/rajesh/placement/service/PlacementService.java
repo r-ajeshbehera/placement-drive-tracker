@@ -71,6 +71,15 @@ public class PlacementService {
         return findDrives("SELECT * FROM drive WHERE company LIKE ?", "%" + company + "%");
     }
 
+    public boolean deleteDrive(int id) throws SQLException {
+        String sql = "DELETE FROM drive WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
     public Drive getDriveById(int id) throws SQLException {
         List<Drive> list = findDrives("SELECT * FROM drive WHERE id = ?", id);
         return list.isEmpty() ? null : list.get(0);
